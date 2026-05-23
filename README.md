@@ -49,6 +49,10 @@ yarn dlx create-all-in-one-eslint@latest
 | **Import-X** | Auto-sorts and groups imports via `eslint-plugin-import-x` |
 | **JSX A11y** | Catches accessibility issues via `eslint-plugin-jsx-a11y` |
 | **Promise** | Enforces promise best practices via `eslint-plugin-promise` |
+| **Next.js** | Core Web Vitals and best practices via `@next/eslint-plugin-next` |
+| **Tailwind CSS** | Auto-sorts classes and catches invalid ones via `eslint-plugin-tailwindcss` |
+| **Prettier (Config)** | Turns off conflicting ESLint formatting rules via `eslint-config-prettier` |
+| **Node.js** | Catches Node-specific bugs via `eslint-plugin-n` |
 
 No plugins are **checked by default** — just select the ones you need.
 

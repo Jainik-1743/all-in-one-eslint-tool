@@ -14,7 +14,11 @@ const packagesMap = {
   reactHooks: ["eslint-plugin-react-hooks"],
   importX: ["eslint-plugin-import-x"],
   jsxA11y: ["eslint-plugin-jsx-a11y"],
-  promise: ["eslint-plugin-promise"]
+  promise: ["eslint-plugin-promise"],
+  next: ["@next/eslint-plugin-next"],
+  tailwind: ["eslint-plugin-tailwindcss"],
+  prettier: ["eslint-config-prettier"],
+  node: ["eslint-plugin-n"]
 };
 
 // Base dependencies that are always required
@@ -39,6 +43,10 @@ async function run() {
       { name: "Import-X (Better import sorting)", value: "importX" },
       { name: "JSX A11y", value: "jsxA11y" },
       { name: "Promise", value: "promise" },
+      { name: "Next.js", value: "next" },
+      { name: "Tailwind CSS", value: "tailwind" },
+      { name: "Prettier (Config)", value: "prettier" },
+      { name: "Node.js", value: "node" },
     ]
   });
 
@@ -55,6 +63,10 @@ async function run() {
   if (answers.includes("importX")) importsStr += `import importX from "eslint-plugin-import-x";\n`;
   if (answers.includes("jsxA11y")) importsStr += `import jsxA11y from "eslint-plugin-jsx-a11y";\n`;
   if (answers.includes("promise")) importsStr += `import pluginPromise from "eslint-plugin-promise";\n`;
+  if (answers.includes("next")) importsStr += `import pluginNext from "@next/eslint-plugin-next";\n`;
+  if (answers.includes("tailwind")) importsStr += `import tailwindcss from "eslint-plugin-tailwindcss";\n`;
+  if (answers.includes("prettier")) importsStr += `import eslintConfigPrettier from "eslint-config-prettier";\n`;
+  if (answers.includes("node")) importsStr += `import pluginNode from "eslint-plugin-n";\n`;
 
   // Generate config array elements
   const configElements = [
@@ -72,6 +84,14 @@ async function run() {
   if (answers.includes("promise")) {
     configElements.push(`  pluginPromise.configs["flat/recommended"],`);
   }
+  
+  if (answers.includes("tailwind")) {
+    configElements.push(`  ...tailwindcss.configs["flat/recommended"],`);
+  }
+  
+  if (answers.includes("node")) {
+    configElements.push(`  pluginNode.configs["flat/recommended-script"],`);
+  }
 
   configElements.push(`  { files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"] },`);
   configElements.push(`  { languageOptions: { globals: globals.browser } },`);
@@ -80,6 +100,7 @@ async function run() {
   if (answers.includes("reactHooks")) pluginsObj.push(`"react-hooks": reactHook`);
   if (answers.includes("importX")) pluginsObj.push(`"import-x": importX`);
   if (answers.includes("jsxA11y")) pluginsObj.push(`"jsx-a11y": jsxA11y`);
+  if (answers.includes("next")) pluginsObj.push(`"@next/next": pluginNext`);
 
   if (pluginsObj.length > 0) {
     configElements.push(`  {
@@ -162,6 +183,13 @@ async function run() {
     );
   }
 
+  if (answers.includes("next")) {
+    rulesObj.push(
+      `...pluginNext.configs.recommended.rules`,
+      `...pluginNext.configs["core-web-vitals"].rules`
+    );
+  }
+
   if (rulesObj.length > 0) {
     configElements.push(`  {
     rules: {
@@ -173,6 +201,10 @@ async function run() {
   configElements.push(`  {
     ignores: ["node_modules", ".next", ".turbo", "build", "out", "coverage", "eslint.config.mjs"],
   },`);
+
+  if (answers.includes("prettier")) {
+    configElements.push(`  eslintConfigPrettier,`);
+  }
 
   const fileContent = `${importsStr}
 /** @type {import('eslint').Linter.Config[]} */
