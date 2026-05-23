@@ -1,6 +1,6 @@
 {
   "name": "create-all-in-one-eslint",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Interactive CLI to scaffold a modern ESLint flat config with React, TypeScript, Import sorting, Accessibility, and Promise rules.",
   "type": "module",
   "bin": {
