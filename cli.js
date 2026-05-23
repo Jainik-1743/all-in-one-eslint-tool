@@ -244,8 +244,12 @@ ${configElements.join("\n")}
     }
   }
 
-  const installCmd = `${pm} ${pm === "yarn" ? "add -D" : pm === "bun" ? "add -d" : "install -D"} ${depsToInstall.join(" ")}`;
-  
+  let installArgs = pm === "yarn" ? "add -D" : pm === "bun" ? "add -d" : "install -D";
+  if (pm === "pnpm" && fs.existsSync(path.join(process.cwd(), "pnpm-workspace.yaml"))) {
+    installArgs = "install -D -w";
+  }
+  const installCmd = `${pm} ${installArgs} ${depsToInstall.join(" ")}`;
+
   try {
     execSync(installCmd, { stdio: "inherit" });
     console.log(pc.green(`\n🎉 All done! ESLint configuration is ready.`));
