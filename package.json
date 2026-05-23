@@ -1,28 +1,43 @@
 {
-  "name": "all-in-one-eslint-tool",
-  "version": "0.0.1",
-  "private": true,
+  "name": "create-all-in-one-eslint",
+  "version": "1.0.1",
+  "description": "Interactive CLI to scaffold a modern ESLint flat config with React, TypeScript, Import sorting, Accessibility, and Promise rules.",
+  "type": "module",
+  "bin": {
+    "create-all-in-one-eslint": "./cli.js"
+  },
+  "main": "cli.js",
+  "files": [
+    "cli.js",
+    "README.md"
+  ],
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "format": "turbo format",
-    "typecheck": "turbo typecheck"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "devDependencies": {
-    "@workspace/eslint-config": "workspace:*",
-    "@workspace/typescript-config": "workspace:*",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "turbo": "^2.8.17",
-    "typescript": "5.9.3"
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "create",
+    "cli",
+    "react",
+    "typescript",
+    "flat-config",
+    "eslint-plugin-react",
+    "eslint-plugin-import-x",
+    "eslint-plugin-jsx-a11y",
+    "eslint-plugin-promise",
+    "scaffolding",
+    "linter"
+  ],
+  "author": "Jainik Patel",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jainik-1743/all-in-one-eslint-tool"
   },
-  "packageManager": "bun@1.1.25",
-  "engines": {
-    "node": ">=20"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "homepage": "https://github.com/Jainik-1743/all-in-one-eslint-tool#readme",
+  "dependencies": {
+    "@inquirer/prompts": "^8.4.3",
+    "picocolors": "^1.1.1"
+  }
 }
