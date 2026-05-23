@@ -4,7 +4,7 @@
   "description": "Interactive CLI to scaffold a modern ESLint flat config with React, TypeScript, Import sorting, Accessibility, and Promise rules.",
   "type": "module",
   "bin": {
-    "create-all-in-one-eslint": "./cli.js"
+    "create-all-in-one-eslint": "cli.js"
   },
   "main": "cli.js",
   "files": [
@@ -33,7 +33,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jainik-1743/all-in-one-eslint-tool"
+    "url": "git+https://github.com/Jainik-1743/all-in-one-eslint-tool.git"
   },
   "homepage": "https://github.com/Jainik-1743/all-in-one-eslint-tool#readme",
   "dependencies": {
