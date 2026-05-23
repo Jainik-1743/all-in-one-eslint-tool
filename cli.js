@@ -5,6 +5,8 @@ import path from "path";
 import { execSync } from "child_process";
 import { checkbox } from "@inquirer/prompts";
 import pc from "picocolors";
+import figlet from "figlet";
+import gradient from "gradient-string";
 
 const packagesMap = {
   typescript: ["typescript-eslint"],
@@ -23,7 +25,10 @@ const baseDependencies = [
 ];
 
 async function run() {
-  console.log(pc.cyan("Welcome to create-all-in-one-eslint setup! 🚀\n"));
+  console.clear();
+  const title = figlet.textSync("ESLint Tool", { font: "Standard" });
+  console.log(gradient(["#4facfe", "#00f2fe", "#4facfe"]).multiline(title));
+  console.log(pc.cyan("\nWelcome to create-all-in-one-eslint setup! 🚀\n"));
 
   const answers = await checkbox({
     message: "Which ESLint plugins would you like to include?",
@@ -191,9 +196,21 @@ ${configElements.join("\n")}
   
   // Try to detect package manager or fallback to npm
   let pm = "npm";
-  if (fs.existsSync(path.join(process.cwd(), "bun.lockb"))) pm = "bun";
-  else if (fs.existsSync(path.join(process.cwd(), "pnpm-lock.yaml"))) pm = "pnpm";
-  else if (fs.existsSync(path.join(process.cwd(), "yarn.lock"))) pm = "yarn";
+  const userAgent = process.env.npm_config_user_agent || "";
+  if (userAgent.startsWith("bun")) pm = "bun";
+  else if (userAgent.startsWith("pnpm")) pm = "pnpm";
+  else if (userAgent.startsWith("yarn")) pm = "yarn";
+  else {
+    let currentDir = process.cwd();
+    while (currentDir !== path.parse(currentDir).root) {
+      if (fs.existsSync(path.join(currentDir, "bun.lockb"))) { pm = "bun"; break; }
+      if (fs.existsSync(path.join(currentDir, "pnpm-lock.yaml"))) { pm = "pnpm"; break; }
+      if (fs.existsSync(path.join(currentDir, "yarn.lock"))) { pm = "yarn"; break; }
+      const parentDir = path.dirname(currentDir);
+      if (parentDir === currentDir) break;
+      currentDir = parentDir;
+    }
+  }
 
   const installCmd = `${pm} ${pm === "yarn" ? "add -D" : pm === "bun" ? "add -d" : "install -D"} ${depsToInstall.join(" ")}`;
   
